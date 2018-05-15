@@ -16,9 +16,11 @@
 		1846286920A18D0D00A70874 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1846286820A18D0D00A70874 /* Assets.xcassets */; };
 		1846286C20A18D0D00A70874 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1846286A20A18D0D00A70874 /* LaunchScreen.storyboard */; };
 		1846287420A196B300A70874 /* InputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1846287320A196B300A70874 /* InputViewController.swift */; };
-		186ABB2C20A9201B00780B59 /* CommonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186ABB2B20A9201B00780B59 /* CommonExtension.swift */; };
-		18A8759B20A54F080097EA7B /* ToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A8759A20A54F080097EA7B /* ToDo.swift */; };
-		18A8759E20A558130097EA7B /* CommoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A8759D20A558130097EA7B /* CommoView.swift */; };
+		186ABB2C20A9201B00780B59 /* CommonUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186ABB2B20A9201B00780B59 /* CommonUtils.swift */; };
+		187949E720AAAB7D00276C47 /* InputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187949E620AAAB7C00276C47 /* InputViewModel.swift */; };
+		187949E920AAB0F900276C47 /* Picker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187949E820AAB0F900276C47 /* Picker.swift */; };
+		18A8759B20A54F080097EA7B /* ToDoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A8759A20A54F080097EA7B /* ToDoModel.swift */; };
+		18A8759E20A558130097EA7B /* KeyBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A8759D20A558130097EA7B /* KeyBoard.swift */; };
 		18A875A020A58C3C0097EA7B /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A8759F20A58C3B0097EA7B /* CategoryModel.swift */; };
 		33794C63E1E181F4F6EA45C0 /* Pods_taskapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EA49E918E5AEA2F94DE9861 /* Pods_taskapp.framework */; };
 /* End PBXBuildFile section */
@@ -36,9 +38,11 @@
 		1846286B20A18D0D00A70874 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1846286D20A18D0D00A70874 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1846287320A196B300A70874 /* InputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewController.swift; sourceTree = "<group>"; };
-		186ABB2B20A9201B00780B59 /* CommonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonExtension.swift; sourceTree = "<group>"; };
-		18A8759A20A54F080097EA7B /* ToDo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDo.swift; sourceTree = "<group>"; };
-		18A8759D20A558130097EA7B /* CommoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommoView.swift; sourceTree = "<group>"; };
+		186ABB2B20A9201B00780B59 /* CommonUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonUtils.swift; sourceTree = "<group>"; };
+		187949E620AAAB7C00276C47 /* InputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewModel.swift; sourceTree = "<group>"; };
+		187949E820AAB0F900276C47 /* Picker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Picker.swift; sourceTree = "<group>"; };
+		18A8759A20A54F080097EA7B /* ToDoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoModel.swift; sourceTree = "<group>"; };
+		18A8759D20A558130097EA7B /* KeyBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBoard.swift; sourceTree = "<group>"; };
 		18A8759F20A58C3B0097EA7B /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
 		1EA49E918E5AEA2F94DE9861 /* Pods_taskapp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_taskapp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		411A7063E0930CB34C477290 /* Pods-taskapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-taskapp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-taskapp/Pods-taskapp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -70,8 +74,10 @@
 		183BD87620A417C5003EBE45 /* model */ = {
 			isa = PBXGroup;
 			children = (
-				18A8759A20A54F080097EA7B /* ToDo.swift */,
+				186ABB2B20A9201B00780B59 /* CommonUtils.swift */,
+				18A8759A20A54F080097EA7B /* ToDoModel.swift */,
 				18A8759F20A58C3B0097EA7B /* CategoryModel.swift */,
+				187949E620AAAB7C00276C47 /* InputViewModel.swift */,
 				18393A6C20A304AD0024890B /* Task.swift */,
 				183BD87720A42BBF003EBE45 /* Category.swift */,
 			);
@@ -101,7 +107,6 @@
 			children = (
 				183BD87420A415EB003EBE45 /* taskapp.entitlements */,
 				1846286120A18D0D00A70874 /* AppDelegate.swift */,
-				186ABB2B20A9201B00780B59 /* CommonExtension.swift */,
 				18A8759C20A550BC0097EA7B /* view */,
 				183BD87520A41635003EBE45 /* controller */,
 				183BD87620A417C5003EBE45 /* model */,
@@ -116,7 +121,8 @@
 		18A8759C20A550BC0097EA7B /* view */ = {
 			isa = PBXGroup;
 			children = (
-				18A8759D20A558130097EA7B /* CommoView.swift */,
+				18A8759D20A558130097EA7B /* KeyBoard.swift */,
+				187949E820AAB0F900276C47 /* Picker.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -258,16 +264,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				186ABB2C20A9201B00780B59 /* CommonExtension.swift in Sources */,
-				18A8759E20A558130097EA7B /* CommoView.swift in Sources */,
+				186ABB2C20A9201B00780B59 /* CommonUtils.swift in Sources */,
+				18A8759E20A558130097EA7B /* KeyBoard.swift in Sources */,
 				18393A6D20A304AD0024890B /* Task.swift in Sources */,
 				183BD87820A42BBF003EBE45 /* Category.swift in Sources */,
 				1846286420A18D0D00A70874 /* ToDoController.swift in Sources */,
 				1846286220A18D0D00A70874 /* AppDelegate.swift in Sources */,
-				18A8759B20A54F080097EA7B /* ToDo.swift in Sources */,
+				18A8759B20A54F080097EA7B /* ToDoModel.swift in Sources */,
 				1846287420A196B300A70874 /* InputViewController.swift in Sources */,
 				18A875A020A58C3C0097EA7B /* CategoryModel.swift in Sources */,
+				187949E920AAB0F900276C47 /* Picker.swift in Sources */,
 				18193E5D20A4459F00B1E66A /* CategoryController.swift in Sources */,
+				187949E720AAAB7D00276C47 /* InputViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -417,7 +425,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"SWIFT_OPTIMIZATION_LEVEL[arch=*]" = "-Onone";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -437,7 +445,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = jp.techacademy.y.kawa.taskapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

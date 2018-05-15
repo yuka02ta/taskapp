@@ -8,6 +8,9 @@
 
 import RealmSwift
 
+/**---------------------------------*
+ * Category
+ *----------------------------------*/
 class Category: Object{
     
     /** カテゴリID */

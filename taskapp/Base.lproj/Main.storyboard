@@ -24,25 +24,25 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="jqZ-0f-cIX">
-                                <rect key="frame" x="0.0" y="120" width="375" height="547"/>
+                                <rect key="frame" x="0.0" y="120" width="375" height="503"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="Fve-jG-dmw" detailTextLabel="G3z-Oo-Rda" style="IBUITableViewCellStyleSubtitle" id="aA2-Gw-lDQ">
-                                        <rect key="frame" x="0.0" y="56" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aA2-Gw-lDQ" id="9wo-f0-NQY">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Fve-jG-dmw">
-                                                    <rect key="frame" x="15" y="5" width="33" height="21"/>
+                                                    <rect key="frame" x="15" y="5" width="33.5" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="G3z-Oo-Rda">
-                                                    <rect key="frame" x="15" y="26" width="44" height="14"/>
+                                                    <rect key="frame" x="15" y="25.5" width="44" height="14.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="textColor"/>
@@ -77,7 +77,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="ToDo" leftItemsSupplementBackButton="YES" id="6nu-C4-geZ">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="V51-9T-DlN">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="add" id="V51-9T-DlN">
                             <connections>
                                 <segue destination="0bh-TD-vKK" kind="show" id="8iC-Bd-YCp"/>
                             </connections>
@@ -116,7 +116,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lYt-hb-Ia7" userLabel="タイトル">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lYt-hb-Ia7" userLabel="タイトル" customClass="KeyBoard" customModule="taskapp" customModuleProvider="target">
                                 <rect key="frame" x="10" y="172" width="355" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="17"/>
@@ -128,39 +128,35 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FcH-hU-93A" userLabel="カテゴリ">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FcH-hU-93A" userLabel="カテゴリ" customClass="CategoryPickerTextField" customModule="taskapp" customModuleProvider="target">
                                 <rect key="frame" x="10" y="98" width="355" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="日時" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lA9-Zu-H3I">
-                                <rect key="frame" x="10" y="222" width="355" height="14"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="内容" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lA9-Zu-H3I">
+                                <rect key="frame" x="10" y="296" width="355" height="14"/>
                                 <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="日時" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FC8-vG-okj">
-                                <rect key="frame" x="10" y="386" width="355" height="14"/>
+                                <rect key="frame" x="10" y="222" width="355" height="14"/>
                                 <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ynC-8G-1s7">
-                                <rect key="frame" x="10" y="410" width="355" height="30"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ynC-8G-1s7" customClass="DateickerTextField" customModule="taskapp" customModuleProvider="target">
+                                <rect key="frame" x="10" y="246" width="355" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="textFieldEditingWithSender:" destination="0bh-TD-vKK" eventType="editingDidEnd" id="gwn-1o-rLJ"/>
+                                </connections>
                             </textField>
-                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="CT0-NM-H4K">
-                                <rect key="frame" x="0.0" y="460" width="375" height="162"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <date key="date" timeIntervalSinceReferenceDate="547631388.57179999">
-                                    <!--2018-05-10 07:49:48 +0000-->
-                                </date>
-                            </datePicker>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="8lf-QL-t2k">
-                                <rect key="frame" x="10" y="502" width="355" height="120"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="8lf-QL-t2k" customClass="KeyBoardView" customModule="taskapp" customModuleProvider="target">
+                                <rect key="frame" x="10" y="318" width="355" height="120"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="120" id="707-Zd-m93"/>
@@ -171,35 +167,35 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="lA9-Zu-H3I" firstAttribute="top" secondItem="lYt-hb-Ia7" secondAttribute="bottom" constant="20" id="7vE-p1-pqb"/>
                             <constraint firstItem="00z-Tx-Mgt" firstAttribute="top" secondItem="GMZ-Es-9lg" secondAttribute="top" constant="10" id="8SP-GL-VDW"/>
                             <constraint firstItem="GMZ-Es-9lg" firstAttribute="trailing" secondItem="lYt-hb-Ia7" secondAttribute="trailing" constant="10" id="A6x-OW-kcS"/>
+                            <constraint firstItem="ynC-8G-1s7" firstAttribute="top" secondItem="FC8-vG-okj" secondAttribute="bottom" constant="10" id="AXg-C3-XSq"/>
                             <constraint firstItem="t3j-21-cds" firstAttribute="top" secondItem="FcH-hU-93A" secondAttribute="bottom" constant="20" id="CmP-x6-duE"/>
                             <constraint firstItem="FcH-hU-93A" firstAttribute="leading" secondItem="GMZ-Es-9lg" secondAttribute="leading" constant="10" id="DmF-FR-RS3"/>
                             <constraint firstItem="GMZ-Es-9lg" firstAttribute="trailing" secondItem="FC8-vG-okj" secondAttribute="trailing" constant="10" id="G38-Kt-Lzn"/>
                             <constraint firstItem="GMZ-Es-9lg" firstAttribute="trailing" secondItem="lA9-Zu-H3I" secondAttribute="trailing" constant="10" id="GNH-w8-F3D"/>
                             <constraint firstItem="lYt-hb-Ia7" firstAttribute="leading" secondItem="GMZ-Es-9lg" secondAttribute="leading" constant="10" id="HPp-QC-MFC"/>
-                            <constraint firstItem="8lf-QL-t2k" firstAttribute="top" secondItem="lA9-Zu-H3I" secondAttribute="bottom" constant="10" id="Jc0-XW-nrI"/>
                             <constraint firstItem="lYt-hb-Ia7" firstAttribute="top" secondItem="t3j-21-cds" secondAttribute="bottom" constant="10" id="K77-nX-cda"/>
                             <constraint firstItem="FC8-vG-okj" firstAttribute="leading" secondItem="GMZ-Es-9lg" secondAttribute="leading" constant="10" id="LUM-UT-Dcw"/>
                             <constraint firstItem="lA9-Zu-H3I" firstAttribute="leading" secondItem="GMZ-Es-9lg" secondAttribute="leading" constant="10" id="O9e-DV-Tfj"/>
+                            <constraint firstItem="FC8-vG-okj" firstAttribute="top" secondItem="lYt-hb-Ia7" secondAttribute="bottom" constant="20" id="QxL-3R-3Tc"/>
                             <constraint firstItem="GMZ-Es-9lg" firstAttribute="trailing" secondItem="FcH-hU-93A" secondAttribute="trailing" constant="10" id="WF6-Ol-VlA"/>
                             <constraint firstItem="ynC-8G-1s7" firstAttribute="leading" secondItem="GMZ-Es-9lg" secondAttribute="leading" constant="10" id="YtB-gI-VwM"/>
-                            <constraint firstItem="ynC-8G-1s7" firstAttribute="top" secondItem="FC8-vG-okj" secondAttribute="bottom" constant="10" id="Z9s-57-wKZ"/>
                             <constraint firstItem="8lf-QL-t2k" firstAttribute="leading" secondItem="GMZ-Es-9lg" secondAttribute="leading" constant="10" id="ZFe-ov-NP2"/>
                             <constraint firstItem="FcH-hU-93A" firstAttribute="top" secondItem="00z-Tx-Mgt" secondAttribute="bottom" constant="10" id="abw-qQ-HhR"/>
+                            <constraint firstItem="8lf-QL-t2k" firstAttribute="top" secondItem="lA9-Zu-H3I" secondAttribute="bottom" constant="8" id="aoH-Hp-AxB"/>
                             <constraint firstItem="GMZ-Es-9lg" firstAttribute="trailing" secondItem="8lf-QL-t2k" secondAttribute="trailing" constant="10" id="f2I-FK-Qdd"/>
                             <constraint firstItem="00z-Tx-Mgt" firstAttribute="trailing" secondItem="GMZ-Es-9lg" secondAttribute="trailing" constant="10" id="kjP-bW-IOQ"/>
                             <constraint firstItem="GMZ-Es-9lg" firstAttribute="trailing" secondItem="ynC-8G-1s7" secondAttribute="trailing" constant="10" id="n0L-Sq-IDg"/>
-                            <constraint firstItem="FC8-vG-okj" firstAttribute="top" secondItem="8lf-QL-t2k" secondAttribute="bottom" constant="20" id="nUP-mM-cGe"/>
                             <constraint firstItem="00z-Tx-Mgt" firstAttribute="leading" secondItem="GMZ-Es-9lg" secondAttribute="leading" constant="10" id="oGt-Gy-YRi"/>
                             <constraint firstItem="GMZ-Es-9lg" firstAttribute="trailing" secondItem="t3j-21-cds" secondAttribute="trailing" constant="10" id="ogD-Dn-glg"/>
                             <constraint firstItem="t3j-21-cds" firstAttribute="leading" secondItem="GMZ-Es-9lg" secondAttribute="leading" constant="10" id="oh0-vY-ynJ"/>
+                            <constraint firstItem="lA9-Zu-H3I" firstAttribute="top" secondItem="ynC-8G-1s7" secondAttribute="bottom" constant="20" id="wDe-uz-VbJ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="GMZ-Es-9lg"/>
                     </view>
                     <navigationItem key="navigationItem" title="タスク" leftItemsSupplementBackButton="YES" id="gSe-Sq-tkl">
-                        <barButtonItem key="rightBarButtonItem" title="カテゴリ" id="hL2-vA-Zsc">
+                        <barButtonItem key="rightBarButtonItem" title="カテゴリ" style="done" id="hL2-vA-Zsc">
                             <connections>
                                 <segue destination="qVE-Tj-nRr" kind="show" id="c98-N0-sdX"/>
                             </connections>
@@ -209,7 +205,7 @@
                     <connections>
                         <outlet property="categorySelect" destination="FcH-hU-93A" id="nwA-Qg-hCf"/>
                         <outlet property="contentsTextView" destination="8lf-QL-t2k" id="nn2-FF-ORi"/>
-                        <outlet property="datePicker" destination="CT0-NM-H4K" id="Nq0-JZ-Lio"/>
+                        <outlet property="datePicker" destination="ynC-8G-1s7" id="hAR-Sg-feh"/>
                         <outlet property="titleTextField" destination="lYt-hb-Ia7" id="Tzb-GG-GO8"/>
                     </connections>
                 </viewController>
@@ -230,18 +226,18 @@
                                 <color key="backgroundColor" red="0.97592383623123169" green="0.97666221857070923" blue="0.97603815793991089" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5BZ-71-0JS" userLabel="wrap">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="559"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="uYs-Dd-hCN">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CatCell" id="PaF-sl-OgR" userLabel="Cell">
-                                                <rect key="frame" x="0.0" y="56" width="375" height="44"/>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CatCell" id="PaF-sl-OgR" userLabel="Cell" customClass="InputTextTableCell" customModule="taskapp" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PaF-sl-OgR" id="ebC-Ti-RUK">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <textField opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jff-3J-yN9" customClass="KeyBoard" customModule="taskapp" customModuleProvider="target">
@@ -253,6 +249,9 @@
                                                         </textField>
                                                     </subviews>
                                                 </tableViewCellContentView>
+                                                <connections>
+                                                    <outlet property="categoryName" destination="Jff-3J-yN9" id="58f-KM-edX"/>
+                                                </connections>
                                             </tableViewCell>
                                         </prototypes>
                                     </tableView>
@@ -278,11 +277,14 @@
                         <viewLayoutGuide key="safeArea" id="NHe-IS-8gc"/>
                     </view>
                     <navigationItem key="navigationItem" title="カテゴリー" id="0xi-Sy-O5k">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="BdM-2n-DXs"/>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="add" id="BdM-2n-DXs">
+                            <connections>
+                                <action selector="tapAdd:" destination="qVE-Tj-nRr" id="bTd-fz-gbS"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <outlet property="navItem" destination="0xi-Sy-O5k" id="tkp-9M-r1e"/>
                         <outlet property="tableView" destination="uYs-Dd-hCN" id="nIr-mV-LcS"/>
                     </connections>
                 </viewController>
@@ -293,7 +295,7 @@
         <!--Navigation Controller-->
         <scene sceneID="LhU-gc-PpD">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="HeS-84-cbE" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="HeS-84-cbE" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="THm-Bs-4gs">

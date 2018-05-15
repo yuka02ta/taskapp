@@ -8,7 +8,10 @@
 
 import RealmSwift
 
-class ToDo{
+/**---------------------------------*
+ * ToDoModel
+ *----------------------------------*/
+class ToDoModel{
     
     /** Realmインスタンスを取得する */
     let realm = try! Realm()
@@ -45,18 +48,35 @@ class ToDo{
     }
     
     /**
+     * カテゴリ取得
+     */
+    func getCategoryName(_ index: Int) -> String{
+        
+        var categoryName: String
+        
+        /** id取得 */
+        let id = taskArray![index].categoryId
+ 
+        /** カテゴリ取得 */
+        let categoryArray = try! Realm().objects(Category.self).filter("categoryId == %@", id)
+        
+        if categoryArray.count == 0 {
+            categoryName = "(カテゴリなし)"
+        }else{
+            categoryName = categoryArray[0].categoryName
+        }
+        
+        return categoryName
+    }
+    
+    /**
      * task時刻取得
      */
     func getTaskListDate(_ index: Int) -> String{
         
         let date = taskArray![index].date
-        
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy年MM月dd日 HH時mm分"
-
-        let dateString:String = formatter.string(from: date)
-        
-        return dateString
+    
+        return dateToString(date)
     }
     
     /**

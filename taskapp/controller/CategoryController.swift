@@ -9,13 +9,21 @@
 import UIKit
 import RealmSwift
 
-class CategoryController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+/**---------------------------------*
+ * デリゲート
+ *----------------------------------*/
+protocol CategoryUpdateDelegate {
+    func doUpdateData(rowIndex index: Int, cellValue value: String)
+}
+
+/**---------------------------------*
+ * CategoryController
+ *----------------------------------*/
+class CategoryController: UIViewController, CategoryUpdateDelegate {
 
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var navItem: UINavigationItem!
-    
-    //var myItems: Array<String> = ["タイトル１", "タイトル２", "タイトル３"]
-    
+
+    /** モデル */
     var model: CategoryModel = CategoryModel()
     
     /**
@@ -29,7 +37,6 @@ class CategoryController: UIViewController, UITableViewDelegate, UITableViewData
         
         /** 初期処理 */
         model.doInit()
-        viewNavBtn()
     }
 
     /**
@@ -40,26 +47,56 @@ class CategoryController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     /**
-     * セル編集可能
-     */
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    /**
      * 追加ボタン押下
      */
-     @objc func tapAdd() {
-        
-        print("追加")
-        
+    @IBAction func tapAdd(_ sender: Any) {
         /** 新規追加 */
-        //myItems.append("")
         model.doNewCategory()
         
         /** TableViewを再読み込み. */
-        //tableView.reloadData()
+        tableView.reloadData()
     }
+    
+    /**
+     * 削除ボタン押下
+     */
+    func doCellDelete(_ tableView: UITableView, _ indexPath: IndexPath){
+        
+        var ret: Bool
+        
+        /** データベースから削除する */
+        ret = model.deleteCategory(indexPath)
+        if ret == true{
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+        
+        /** TableViewを再読み込み. */
+        tableView.reloadData()
+    }
+    
+    /**
+     * デリゲートメソッド
+     * 行登録処理
+     */
+    func doUpdateData(rowIndex index: Int, cellValue value: String) -> () {
+
+        /** 登録 */
+        model.doUpdate(index, value)
+    }
+    
+    /**
+     * 画面が非表示の時に呼ばれる
+     */
+    override func viewWillDisappear(_ animated: Bool) {
+
+        super.viewWillDisappear(animated)
+    }
+}
+
+/**---------------------------------*
+ * tableView
+ *----------------------------------*/
+extension CategoryController: UITableViewDelegate, UITableViewDataSource{
     
     /**
      * セル数取得
@@ -69,30 +106,37 @@ class CategoryController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     /**
+     * 各セルの選択時処理
+     */
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    }
+    
+    /**
      * セルの設定
      */
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
- 
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CatCell", for: indexPath)
 
-        let titleText = cell.viewWithTag(1) as! UITextField
-        titleText.text = model.getCategoryListTitle(indexPath.row)
+        /** セルを取得して値を設定する */
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CatCell", for: indexPath) as! InputTextTableCell
+
+        /** 行番号セット */
+        cell.categoryName.tag = indexPath.row
+        cell.categoryName.text = model.getCategoryListTitle(indexPath.row)
+        cell.delegate = self
 
         return cell
     }
     
     /**
-     * 各セルの選択時処理
+     * セル編集可能
      */
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//
-//        /** タスク作成/編集画面遷移 */
-//        //performSegue(withIdentifier: "cellSegue", sender: nil)
-//        print(indexPath.row)
-//    }
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
     
     /**
-     * 削除処理
+     * セルスワイプ処理
+     * 削除ボタン表示
      */
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
@@ -109,79 +153,61 @@ class CategoryController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     /**
-     * Deleteボタン押下
+     * tableのHeaderをを0
      */
-    func doCellDelete(_ tableView: UITableView, _ indexPath: IndexPath){
-        
-        var ret: Bool
-        
-        /** データベースから削除する */
-        ret = model.deleteCategory(indexPath)
-        if ret == true{
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return .leastNormalMagnitude
     }
-    
-//    /**
-//     * 画面が非表示の時に呼ばれる
-//     */
-//    override func viewWillDisappear(_ animated: Bool) {
-//
-//        super.viewWillDisappear(animated)
-//    }
-    
-    /**
-     * ボタンview
-     */
-    func viewNavBtn() {
-        
-        /** 表示変更 */
-//        if ？？？？ == true{
-        let btn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(tapAdd))
-            navItem.setRightBarButton(btn, animated: false)
-//        }
-//        else{
-//            let btn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(KeyBoard.closeButtonTapped))
-//            navItem.setRightBarButton(btn, animated: false)
-//        }
-        
-        
-    }
-
 }
 
-/**
- * 閉じるボタンの付いたキーボード
- */
-class KeyBoard: UITextField{
+/**---------------------------------*
+ * InputTextTableCell
+ * デリゲート
+ *----------------------------------*/
+class InputTextTableCell: UITableViewCell, UITextFieldDelegate {
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInit()
-    }
+    var delegate:CategoryUpdateDelegate! = nil
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        commonInit()
+    @IBOutlet weak var categoryName: KeyBoard!
+    
+    /**
+     * 初期化
+     */
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        categoryName.delegate = self
     }
     
     /**
-     * 閉じるボタンの付いたキーボード作成
+     * setSelected
      */
-    private func commonInit(){
-        let tools = UIToolbar()
-        tools.frame = CGRect(x: 0, y: 0, width: frame.width, height: 40)
-        
-        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-        let closeButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(closeButtonTapped))
-        tools.items = [spacer, closeButton]
-        self.inputAccessoryView = tools
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
     }
     
-    @objc func closeButtonTapped(){
+    /**
+     * 改行押下時
+     */
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
-        self.endEditing(true)
-        self.resignFirstResponder()
+        /** キーボード閉じる */
+        textField.endEditing(true)
+        textField.resignFirstResponder()
+        
+        return true
+    }
+    
+    /**
+     * デリゲート
+     * 値変更時呼び出し
+     */
+    func textFieldDidEndEditing(_ textField: UITextField) {
+ 
+        /** 行更新 */
+        self.delegate.doUpdateData(rowIndex: textField.tag, cellValue: textField.text!)
     }
 }
+
+
 

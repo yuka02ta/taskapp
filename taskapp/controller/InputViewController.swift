@@ -8,20 +8,28 @@
 
 import UIKit
 import RealmSwift
-import UserNotifications
 
-class InputViewController: UIViewController {
+/**---------------------------------*
+ * InputViewController
+ *----------------------------------*/
+class InputViewController: UIViewController{
     
     @IBOutlet weak var categorySelect: UITextField!
-    @IBOutlet weak var titleTextField: UITextField!
-    @IBOutlet weak var contentsTextView: UITextView!
-    @IBOutlet weak var datePicker: UIDatePicker!
+    @IBOutlet weak var titleTextField: KeyBoard!
+    @IBOutlet weak var contentsTextView: KeyBoardView!
+    @IBOutlet weak var datePicker: UITextField!
+    
+    /** モデル */
+    var model: InputViewModel = InputViewModel()
     
     /** Realmインスタンスを取得する */
     let realm = try! Realm()
     
     /** task */
     var task: Task!
+    
+    var pickerView: UIPickerView = UIPickerView()
+    let datePickerView:UIDatePicker = UIDatePicker()
     
     /**
      * viewDidLoad
@@ -33,10 +41,25 @@ class InputViewController: UIViewController {
         let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(dismissKeyboard))
         self.view.addGestureRecognizer(tapGesture)
         
+        /** カテゴリーPickerセット */
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        pickerView.showsSelectionIndicator = true
+        categorySelect.inputView = pickerView
+        
+        /** datePickerセット */
+        datePickerView.datePickerMode = UIDatePickerMode.dateAndTime
+        datePicker.inputView = datePickerView
+        
         /** taskセット */
+        categorySelect.tag = task.categoryId
+        categorySelect.text = model.getCategoryName(task.categoryId)
         titleTextField.text = task.title
         contentsTextView.text = task.contents
-        datePicker.date = task.date
+        datePicker.text = dateToString(task.date)
+        
+        /** 初期処理 */
+        model.doInit()
     }
 
     /**
@@ -46,21 +69,21 @@ class InputViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-
     /**
      * 画面が非表示の時に呼ばれる
      */
     override func viewWillDisappear(_ animated: Bool) {
+        
         try! realm.write {
-            self.task.categoryId = 0
+            self.task.categoryId = self.categorySelect.tag
             self.task.title = self.titleTextField.text!
             self.task.contents = self.contentsTextView.text
-            self.task.date = self.datePicker.date
+            self.task.date = stringToDate(self.datePicker.text!)!
             self.realm.add(self.task, update: true)
         }
 
         /** タスクの通知 */
-        setNotification(task: task)
+        model.setNotification(task: task)
         
         super.viewWillDisappear(animated)
     }
@@ -69,14 +92,6 @@ class InputViewController: UIViewController {
      * segueで画面遷移するに呼ばれる
      */
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
-        
-//        let inputViewController:InputViewController = segue.destination as! InputViewController
-//
-//        /** カテゴリ押下時 */
-//        if segue.identifier == "cellSegue" {
-//
-//            self.task= task
-//        }
     }
     
     /**
@@ -91,50 +106,55 @@ class InputViewController: UIViewController {
     @objc func dismissKeyboard(){
         view.endEditing(true)
     }
+
+    /**
+     * 日時押下時
+     */
+    @IBAction func textFieldEditing(sender: UITextField) {
+
+        datePickerView.addTarget(self, action: #selector(self.datePickerValueChanged), for: UIControlEvents.valueChanged)
+    }
     
     /**
-     * タスクのローカル通知を登録する
+     * 日時変更時処理
      */
-    func setNotification(task: Task) {
+    @objc func datePickerValueChanged(sender:UIDatePicker) {
         
-        let content = UNMutableNotificationContent()
-        
-        /** タイトルと内容を設定(中身がない場合メッセージ無しで音だけの通知になるので「(xxなし)」を表示する) */
-        if task.title == "" {
-            content.title = "(タイトルなし)"
-        } else {
-            content.title = task.title
-        }
-        if task.contents == "" {
-            content.body = "(内容なし)"
-        } else {
-            content.body = task.contents
-        }
-        content.sound = UNNotificationSound.default()
-        
-        /** ローカル通知が発動するtrigger（日付マッチ）を作成 */
-        let calendar = Calendar.current
-        let dateComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: task.date)
-        let trigger = UNCalendarNotificationTrigger.init(dateMatching: dateComponents, repeats: false)
-        
-        /** identifier, content, triggerからローカル通知を作成（identifierが同じだとローカル通知を上書き保存）*/
-        let request = UNNotificationRequest.init(identifier: String(task.id), content: content, trigger: trigger)
-        
-        /** ローカル通知を登録 */
-        let center = UNUserNotificationCenter.current()
-        center.add(request) { (error) in
-            
-            /** error が nil ならローカル通知の登録に成功したと表示します。errorが存在すればerrorを表示します。 */
-            print(error ?? "ローカル通知登録 OK")
-        }
-        
-        /** 未通知のローカル通知一覧をログ出力 */
-        center.getPendingNotificationRequests { (requests: [UNNotificationRequest]) in
-            for request in requests {
-                print("/---------------")
-                print(request)
-                print("---------------/")
-            }
-        }
+        datePicker.text = dateToString(sender.date)
+    }
+}
+
+/**---------------------------------*
+ * カテゴリーピッカー
+ *----------------------------------*/
+extension InputViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+
+    /**
+     * コンポーネント数
+     */
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    /**
+     * コンポーネント内の行数
+     */
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return model.getCategoryList()!.count
+    }
+    
+    /**
+     * 行ごとに設定されたタイトル
+     */
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return model.getCategoryList()![row].categoryName
+    }
+    
+    /**
+     * 行が選択されたときにテキストフィールドのテキストを更新
+     */
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        categorySelect.tag = model.getCategoryList()![row].categoryId
+        categorySelect.text = model.getCategoryList()![row].categoryName
     }
 }

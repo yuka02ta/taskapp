@@ -7,16 +7,18 @@
 //
 
 import UIKit
-import RealmSwift
 import UserNotifications
 
-class ToDoController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
-    
+/**---------------------------------*
+ * ToDoController
+ *----------------------------------*/
+class ToDoController: UIViewController, UISearchBarDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var search: UISearchBar!
 
-    var model: ToDo = ToDo()
+    /** モデル */
+    var model: ToDoModel = ToDoModel()
     
     /**
      * viewDidLoad
@@ -26,9 +28,7 @@ class ToDoController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         tableView.delegate = self
         tableView.dataSource = self
-        
         search.delegate = self
-        search.scopeButtonTitles = ["全て"]
         
         /** 初期処理 */
         model.doInit()
@@ -42,13 +42,6 @@ class ToDoController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     /**
-     * セル数取得
-     */
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return model.getTaskList()!.count
-    }
-    
-    /**
      * 検索
      */
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -58,52 +51,6 @@ class ToDoController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
         /** テーブル再読み込み */
         tableView.reloadData()
-    }
-    
-    /**
-     * 各セルの内容を返す
-     */
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        /** 再利用可能なセル */
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        
-        /** セルに値をセット */
-        cell.textLabel?.text = model.getTaskListTitle(indexPath.row)
-        cell.detailTextLabel?.text = model.getTaskListDate(indexPath.row)
-    
-        return cell
-    }
-    
-    /**
-     * 各セルの選択時処理
-     */
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-        /** タスク作成/編集画面遷移 */
-        performSegue(withIdentifier: "cellSegue", sender: nil)
-    }
-    
-    /**
-     * セル編集可能
-     */
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    /**
-     * 削除処理
-     */
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let btnDelete = UITableViewRowAction(style: .default, title: "削除") {
-            action, index in
-            self.doCellDelete(tableView, indexPath)
-        }
-        
-        /** 削除ボタン */
-        btnDelete.backgroundColor = .red
-        
-        return [btnDelete]
     }
     
     /**
@@ -171,18 +118,6 @@ class ToDoController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     /**
      * 入力UI終了処理
-     * ・完了押下
-     */
-//    func textFieldShouldReturn(_ search: UISearchBar) -> Bool {
-//
-//        /** 非表示にする */
-//       search.resignFirstResponder()
-//
-//        return true
-//    }
-
-    /**
-     * 入力UI終了処理
      * ・エリア外押下
      */
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -193,10 +128,78 @@ class ToDoController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
-    //検索ボタン押下時の呼び出しメソッド
+    /**
+     * 検索ボタン押下時の呼び出しメソッド
+     */
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 
         search.resignFirstResponder()
+    }
+}
+
+/**---------------------------------*
+ * tableView
+ *----------------------------------*/
+extension ToDoController: UITableViewDelegate, UITableViewDataSource{
+    
+    /**
+     * セル数取得
+     */
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return model.getTaskList()!.count
+    }
+    
+    /**
+     * 各セルの選択時処理
+     */
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        /** タスク作成/編集画面遷移 */
+        performSegue(withIdentifier: "cellSegue", sender: nil)
+    }
+    
+    /**
+     * セル編集可能
+     */
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    /**
+     * 各セルの内容を返す
+     */
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        /** 再利用可能なセル */
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        
+        /** セルに値をセット */
+        cell.textLabel?.text = model.getTaskListTitle(indexPath.row)
+        cell.detailTextLabel?.text = model.getTaskListDate(indexPath.row) + "  - " + model.getCategoryName(indexPath.row)
+        
+        return cell
+    }
+    
+    /**
+     * 削除処理
+     */
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let btnDelete = UITableViewRowAction(style: .default, title: "削除") {
+            action, index in
+            self.doCellDelete(tableView, indexPath)
+        }
+        
+        /** 削除ボタン */
+        btnDelete.backgroundColor = .red
+        
+        return [btnDelete]
+    }
+    
+    /**
+     * tableのHeaderをを0
+     */
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return .leastNormalMagnitude
     }
 }
 

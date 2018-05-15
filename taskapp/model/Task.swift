@@ -8,6 +8,9 @@
 
 import RealmSwift
 
+/**---------------------------------*
+ * Task
+ *----------------------------------*/
 class Task: Object{
     /** 管理用 ID。プライマリーキー */
     @objc dynamic var id = 0

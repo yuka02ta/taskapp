@@ -8,6 +8,9 @@
 
 import RealmSwift
 
+/**---------------------------------*
+ * CategoryModel
+ *----------------------------------*/
 class CategoryModel{
     
     /** Realmインスタンスを取得する */
@@ -20,7 +23,7 @@ class CategoryModel{
      * 初期処理
      */
     func doInit() {
-        categoryArray = try! Realm().objects(Category.self).sorted(byKeyPath: "categoryId", ascending: false)
+        categoryArray = try! Realm().objects(Category.self).sorted(byKeyPath: "categoryId", ascending: true)
     }
     
     /**
@@ -31,7 +34,7 @@ class CategoryModel{
     }
     
     /**
-     * taskタイトル取得
+     * カテゴリ名取得
      */
     func getCategoryListTitle(_ index: Int) -> String{
 
@@ -46,8 +49,6 @@ class CategoryModel{
     func doNewCategory(){
 
         let category = Category()
-        
-       // doUpdate()
 
         /** 新規タスク取得 */
         let categoryArray = realm.objects(Category.self)
@@ -62,34 +63,37 @@ class CategoryModel{
     }
 
     /**
+     * 行更新処理
+     */
+    func doUpdate(_ index: Int, _ text: String){
+        
+        var cate: Category
+        cate = categoryArray![index]
+
+        /** 更新処理 */
+        try! realm.write {
+        
+            /** カテゴリ名セット */
+            cate.categoryName = text
+            self.realm.add(cate, update: true)
+        }
+        
+        print("登録")
+    }
+    
+    /**
      * 行削除
      */
     func deleteCategory(_ indexPath: IndexPath) -> Bool{
-
+        
         var ret: Bool = false
-
+        
         /** データベースから削除する */
         try! realm.write {
             self.realm.delete(self.categoryArray![indexPath.row])
             ret = true
         }
-
+        
         return ret
     }
-    
-    /**
-     * 更新処理
-     */
-    func doUpdate(){
-        
-        /** 更新処理 */
-        try! realm.write {
-            
-            for category in categoryArray!{
-                self.realm.add(category, update: true)
-            }
-        }
-    }
-
-    
 }

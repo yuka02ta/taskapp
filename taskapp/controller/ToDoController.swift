@@ -184,7 +184,7 @@ extension ToDoController: UITableViewDelegate, UITableViewDataSource{
 }
 
 /**---------------------------------*
- * 検索カテゴリーピッカー
+ * 検索カテゴリ
  *----------------------------------*/
 extension ToDoController: UISearchBarDelegate {
     

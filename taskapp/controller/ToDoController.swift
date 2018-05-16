@@ -12,7 +12,7 @@ import UserNotifications
 /**---------------------------------*
  * ToDoController
  *----------------------------------*/
-class ToDoController: UIViewController, UISearchBarDelegate {
+class ToDoController: UIViewController{
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var search: UISearchBar!
@@ -39,18 +39,6 @@ class ToDoController: UIViewController, UISearchBarDelegate {
      */
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-    }
-    
-    /**
-     * 検索
-     */
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-
-        /** 検索 */
-        model.doInq(searchText)
-
-        /** テーブル再読み込み */
-        tableView.reloadData()
     }
     
     /**
@@ -127,14 +115,6 @@ class ToDoController: UIViewController, UISearchBarDelegate {
             search.resignFirstResponder()
         }
     }
-    
-    /**
-     * 検索ボタン押下時の呼び出しメソッド
-     */
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-
-        search.resignFirstResponder()
-    }
 }
 
 /**---------------------------------*
@@ -202,4 +182,31 @@ extension ToDoController: UITableViewDelegate, UITableViewDataSource{
         return .leastNormalMagnitude
     }
 }
+
+/**---------------------------------*
+ * 検索カテゴリーピッカー
+ *----------------------------------*/
+extension ToDoController: UISearchBarDelegate {
+    
+    /**
+     * 検索
+     */
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        /** 検索 */
+        model.doInq(searchText)
+        
+        /** テーブル再読み込み */
+        tableView.reloadData()
+    }
+    
+    /**
+     * 検索ボタン押下時の呼び出しメソッド
+     */
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        search.resignFirstResponder()
+    }
+}
+
+
 

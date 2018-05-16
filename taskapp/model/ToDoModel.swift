@@ -18,12 +18,16 @@ class ToDoModel{
     
     /** taskリスト: 日付の降順 */
     var taskArray : Results<Task>?
+    
+    /** リスト: 日付の降順 */
+    var categoryArray : Results<Category>?
 
     /**
      * 初期処理
      */
     func doInit() {
         taskArray = try! Realm().objects(Task.self).sorted(byKeyPath: "date", ascending: false)
+        categoryArray = try! Realm().objects(Category.self).sorted(byKeyPath: "categoryId", ascending: true)
     }
     
     /**
@@ -31,6 +35,13 @@ class ToDoModel{
      */
     func getTaskList() -> Results<Task>?{
         return taskArray
+    }
+    
+    /**
+     * カテゴリリスト取得
+     */
+    func getCategoryList() -> Results<Category>?{
+        return categoryArray
     }
     
     /**
@@ -116,14 +127,39 @@ class ToDoModel{
      */
     func doInq(_ searchText: String){
         
+        /** リスト */
+        var categoryArrayTmp : Results<Category>?
+        var term: String = ""
+        var categoryArrayCnt = 0
+        
+        /** カテゴリidを取得 */
+        if !searchText.isEmpty {
+            categoryArrayTmp = realm.objects(Category.self).filter("categoryName BEGINSWITH %@", searchText)
+        }
+        
+        /** カウント */
+        if let categoryArrayTmp = categoryArrayTmp {
+            categoryArrayCnt = categoryArrayTmp.count
+        }
+        
         /** 全件 */
         if searchText.isEmpty {
-            taskArray = try! Realm().objects(Task.self).sorted(byKeyPath: "date", ascending: false)
+            taskArray = realm.objects(Task.self).sorted(byKeyPath: "date", ascending: false)
 
-        } else {
-            taskArray = realm
-                .objects(Task.self)
-                .filter("title BEGINSWITH %@", searchText)
+        }
+        else if categoryArrayCnt != 0{
+        
+            /** 条件組み立て */
+            for idx in 0...categoryArrayCnt-1{
+                term = term + "categoryId = " + "\(categoryArrayTmp![idx].categoryId)"
+
+                if idx != categoryArrayCnt-1 {
+                    term = term + " or "
+                }
+            }
+            
+            /** 検索 */
+            taskArray = realm.objects(Task.self).filter(term).sorted(byKeyPath: "date", ascending: false)
         }
     }
     

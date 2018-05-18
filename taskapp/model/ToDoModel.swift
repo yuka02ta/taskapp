@@ -145,10 +145,10 @@ class ToDoModel{
         /** 全件 */
         if searchText.isEmpty {
             taskArray = realm.objects(Task.self).sorted(byKeyPath: "date", ascending: false)
-
+            return
         }
-        else if categoryArrayCnt != 0{
         
+        if categoryArrayCnt != 0{
             /** 条件組み立て */
             for idx in 0...categoryArrayCnt-1{
                 term = term + "categoryId = " + "\(categoryArrayTmp![idx].categoryId)"
@@ -157,10 +157,12 @@ class ToDoModel{
                     term = term + " or "
                 }
             }
-            
-            /** 検索 */
-            taskArray = realm.objects(Task.self).filter(term).sorted(byKeyPath: "date", ascending: false)
         }
+        else{
+            term = "categoryId = -1 "
+        }
+        /** 検索 */
+        taskArray = realm.objects(Task.self).filter(term).sorted(byKeyPath: "date", ascending: false)
     }
     
 }

@@ -26,7 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		18193E5C20A4459F00B1E66A /* CategoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryController.swift; sourceTree = "<group>"; };
+		18193E5C20A4459F00B1E66A /* CategoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryController.swift; sourceTree = "<group>"; usesTabs = 0; };
 		18393A6C20A304AD0024890B /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		183BD87420A415EB003EBE45 /* taskapp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = taskapp.entitlements; sourceTree = "<group>"; };
 		183BD87720A42BBF003EBE45 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
